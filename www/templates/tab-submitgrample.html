@@ -2,12 +2,12 @@
   <ion-content class="padding">
     <h2>Submit a Grample</h2>
     <form name="grampleSubmit" ng-controller="formData" novalidate>
-             <div ng-controller="takePhoto">
-	             <button class="button button-positive button-full" ng-click=
-	                            "takePhoto()">Take Picture</button>
-	             <div class="center">
-	                 <img ng-src="{{imgURI}}">
-	              </div>
+             <div ng-controller="getImage">
+		            <button class="button button-positive button-full" ng-click="takePhoto()">Take Picture</button>
+		            <button class="button button-energized button-full" ng-click="getImageFromGalleryClick()">Upload an image</button>
+	             	<div class="center">
+	                 	<img  ng-src="{{imgURI}}"> 
+	              	</div>
              </div>
            <div class="list">
                <label class="item item-input">
