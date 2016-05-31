@@ -1,32 +1,27 @@
 <ion-view view-title="Submit Grample">
   <ion-content class="padding">
     <h2>Submit a Grample</h2>
-    <form name="grampleSubmit" ng-controller="formData" novalidate>
+    <form name="grampleSubmit" ng-controller="formData">
              <div ng-controller="getImage">
 		            <button class="button button-positive button-full" ng-click="takePhoto()">Take Picture</button>
 		            <button class="button button-energized button-full" ng-click="getImageFromGalleryClick()">Upload an image</button>
 	             	<div class="center">
-	                 	<img  ng-src="{{imgURI}}"> 
+	                <img id="uploadImage" ng-controller="imageInit" ng-src="{{imgURI}}"> 
 	              	</div>
              </div>
            <div class="list">
                <label class="item item-input">
                    <span class="input-label">Name</span>
-                   <input type="email" name="grampleName" ng-model="grambleName" ng-minlength="5" required>
+                   <input type="text" name="grampleName" ng-model="formData.grampleName">
                </label>
                <label class="item item-input">
                    <span class="input-label">Description</span>
-                   <input type="text" name="grampleDescription" ng-model="grampleDescription" ng-minlength="6" required>
+                   <input type="text" name="grampleDescription" ng-model="formData.grampleDescription">
                </label> 
            </div>
            <div class="padding">
-               <p ng-show="grampleSubmit.grampleName.$error.required">* Grample name is required</p>
-               <p ng-show="grampleSubmit.grampleDescription.$error.required">* Description is required</p>
+               <button type="button" class="button button-block button-positive" ng-click="formSubmit()">Submit</button>
            </div>
-           <div class="padding">
-               <button type="button" class="button button-block button-positive" ng-disabled="grampleSubmit.$invalid" ng-click="submit(username)">Submit</button>
-           </div>
-          <button ng-controller="uploadController" class="button" ng-click="upload()">Upload From Assets</button>
        </form>
   </ion-content>
 </ion-view>

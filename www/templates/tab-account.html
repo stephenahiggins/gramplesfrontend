@@ -1,9 +1,12 @@
 <ion-view view-title="Account">
   <ion-content>
     <ion-list>
-    <ion-toggle  ng-model="settings.enableFriends">
+    <!-- <ion-toggle  ng-model="settings.enableFriends">
         Enable Friends
-    </ion-toggle>
+    </ion-toggle> -->
+    <button class="button button-block button-positive" ng-click="logout()" >
+      Logout <span ng-click="logout()" ng-show="currentUser"></span>
+    </button>
     </ion-list>
   </ion-content>
 </ion-view>

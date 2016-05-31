@@ -5,9 +5,9 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova', 'satellizer'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $rootScope, $auth, $state) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -20,10 +20,22 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
-  });
-})
+    // Satellizer Logout function
+    $rootScope.logout = function() {
+          $auth.logout().then(function() {
+              // Remove the authenticated user from local storage
+              localStorage.removeItem('user');
+              // Remove the current user info from rootscope
+              $rootScope.currentUser = null;
+              $state.go('tab.home');
+          });
+          }
+  }); // End Ionic Ready 
+}) // End Run 
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $authProvider) {
+ 
+  $authProvider.loginUrl = 'http://gramples.app/api/v1/authenticate'; //or whatever your api url is
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
@@ -31,7 +43,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   $stateProvider
 
   // setup an abstract state for the tabs directive
-    .state('tab', {
+  .state('tab', {
     url: '/tab',
     abstract: true,
     templateUrl: 'templates/tabs.html'
@@ -41,6 +53,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
   .state('tab.home', {
     url: '/home',
+    permissions: {
+              except: ['anonymous'],
+              redirectTo: 'app.auth'
+            }, 
     views: {
       'tab-home': {
         templateUrl: 'templates/tab-home.html',
@@ -71,6 +87,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
   .state('tab.mygramples', {
       url: '/mygramples',
+      permissions: {
+                except: ['anonymous'],
+                redirectTo: 'app.auth'
+              }, 
       views: {
         'tab-mygramples': {
           templateUrl: 'templates/tab-grample.html',
@@ -99,6 +119,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
+  .state('tab.login', {
+      url: '/login',
+      views: {
+        'tab-login': {
+          templateUrl: 'templates/tab-login.html',
+          controller: 'AuthCtrl'
+        }
+      }
+    })
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/home');

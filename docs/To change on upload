@@ -1,0 +1,6 @@
+controller.js 
+=============
+
+$http.get('http://gramples.app/api/v1/authenticate/user').success(function(response){ 
+
+Change to remote URI 

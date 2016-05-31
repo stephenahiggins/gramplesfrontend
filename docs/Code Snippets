@@ -1,0 +1,3 @@
+ Get the current user in Satellizer
+ 
+ $rootScope.currentUser = JSON.parse(localStorage.getItem('user'));
