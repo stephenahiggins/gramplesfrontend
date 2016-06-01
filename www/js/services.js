@@ -1,44 +1,26 @@
 angular.module('starter.services', [])
 
-.factory('Gramples', function() {
+.factory('getGramples', function($http, ApiEndpoint) {
   // Might use a resource here that returns a JSON array
-
-  // Some fake testing data
-  var gramples = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    description: 'You on your way?',
-    image: 'img/ben.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    description: 'Hey, it\'s me',
-    image: 'img/max.png'
-  }, {
-    id: 2,
-    name: 'Adam Bradleyson',
-    description: 'I should buy a boat',
-    image: 'img/adam.jpg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    description: 'Look at my mukluks!',
-    image: 'img/perry.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    description: 'This is wicked good ice cream.',
-    image: 'img/mike.png'
-  }];
-
+var gramples = []
   return {
-    all: function() {
-      return gramples;
+    all: function(lastpage) {
+      // To put here: Calculate the currect page 
+      var promise = $http.get(ApiEndpoint.url + '/api/v1/getmygramples', {
+            params: {
+              //page: lastpage
+            }, 
+        }).then(function(response){
+            console.log(response.data.original); 
+            return response.data.original; 
+        });  
+       // console.log(promise); 
+        return promise; 
     },
-    remove: function(chat) {
-      gramples.splice(gramples.indexOf(chat), 1);
+    remove: function(grample) {
+      gramples.splice(gramples.indexOf(grample), 1);
     },
-    get: function(chatId) {
+    get: function(grampleId) {
       for (var i = 0; i < gramples.length; i++) {
         if (gramples[i].id === parseInt(chatId)) {
           return gramples[i];
@@ -47,6 +29,7 @@ angular.module('starter.services', [])
       return null;
     }
   };
+
 });
 
 

@@ -1,10 +1,9 @@
 angular.module('starter.controllers', [])
 
-.controller('AuthCtrl', function($scope, $location, $stateParams, $ionicHistory, $http, $state, $auth, $rootScope) {
+.controller('AuthCtrl', function($scope, $location, $stateParams, $ionicHistory, $http, $state, $auth, $rootScope, ApiEndpoint) {
         $scope.loginData = {}
         $scope.loginError = false;
         $scope.loginErrorText;
- 
         $scope.login = function() {
  
             var credentials = {
@@ -14,7 +13,7 @@ angular.module('starter.controllers', [])
           $auth.login(credentials)
                 .then(function(response) {
                     // Return an $http request for the authenticated user
-                    $http.get('http://gramples.app/api/v1/authenticate/user').success(function(response){
+                    $http.get(ApiEndpoint.url + '/api/v1/authenticate/user').success(function(response){
                      // console.log(response); 
                         // Stringify the retured data
                         var user = JSON.stringify(response.user);
@@ -44,32 +43,27 @@ angular.module('starter.controllers', [])
     if (typeof $rootScope.currentUser != "undefined"){
        $scope.userLoggedIn = true; 
        $scope.userLoggedOut = false;  
-       $scope.test = "Wan"; 
-       console.log('Logged in'); 
     } 
-    if (typeof $rootScope.currentUser == "undefined"){
+    if (typeof $rootScope.currentUser == "undefined" || $rootScope.currentUser == null){
         $scope.userLoggedIn = false; 
         $scope.userLoggedOut = true; 
-         $scope.test = "Wag"; 
-         console.log('Not Logged in'); 
     }
     }); 
 })
 
 .controller('HomeCtrl', function($scope) {})
 
-.controller('MyGramplesCtrl', function($scope, Gramples) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+.controller('MyGramplesCtrl', function($scope, getGramples) {
+  var lastpage = 1; 
+  $scope.$on("$ionicView.beforeEnter", function() { //Ensure the data is refreshed with every click of the tab. This is a workaround of the Ionic caching. 
+      // Wait for the promise 
+      getGramples.all().then(function(promise){
+        $scope.gramples = promise.data; 
+      });
+  });
 
-  $scope.gramples = Gramples.all();
-  $scope.remove = function(gramples) {
-    Gramples.remove(Gramples);
+  $scope.remove = function(getGramples) {
+      getGramples.remove(getGramples);
   };
 })
 
@@ -77,9 +71,8 @@ angular.module('starter.controllers', [])
 
 .controller('FindGramplesCtrl', function($scope) {})
 
-.controller('MyGrampleDetailCtrl', function($scope, $stateParams, Gramples) {
-  console.log($scope, $stateParams, Gramples); 
-  $scope.gramples = Gramples.get($stateParams.grampleId);
+.controller('MyGrampleDetailCtrl', function($scope, $stateParams, getGramples) {
+ // $scope.gramples = getGramples.get($stateParams.grampleId);
 })
 
 .controller('AccountCtrl', function($scope) {

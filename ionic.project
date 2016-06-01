@@ -1,4 +1,8 @@
 {
   "name": "gramples",
-  "app_id": ""
+  "app_id": "", 
+  "proxies": [{
+     "path": "/proxy/",
+     "proxyUrl": "http://gramples.app/"
+   }]
 }
