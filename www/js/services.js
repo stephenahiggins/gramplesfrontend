@@ -1,35 +1,53 @@
 angular.module('starter.services', [])
 
-.factory('getGramples', function($http, ApiEndpoint) {
-  // Might use a resource here that returns a JSON array
-var gramples = []
-  return {
-    all: function(lastpage) {
-      // To put here: Calculate the currect page 
-      var promise = $http.get(ApiEndpoint.url + '/api/v1/getmygramples', {
-            params: {
-              //page: lastpage
-            }, 
-        }).then(function(response){
-            console.log(response.data.original); 
-            return response.data.original; 
-        });  
-       // console.log(promise); 
-        return promise; 
-    },
-    remove: function(grample) {
-      gramples.splice(gramples.indexOf(grample), 1);
-    },
-    get: function(grampleId) {
-      for (var i = 0; i < gramples.length; i++) {
-        if (gramples[i].id === parseInt(chatId)) {
-          return gramples[i];
-        }
-      }
-      return null;
-    }
-  };
+    .factory('Subjects', function($http, ApiEndpoint, gramplesSettings) {
+          // Might use a resource here that returns a JSON array
+          return {
+                getMine: function(lastpage) {
+                   var promise = $http.get(ApiEndpoint.url + '/api/v1/getmysubjects')
+                    .then(function(response){
+                            return response.data; 
+                    });  
+                    return promise; 
+                }, 
+                getAll: function(){
+                   var promise = $http.get(ApiEndpoint.url + '/api/v1/getsubjects')
+                    .then(function(response){
+                            return response.data; 
+                    });  
+                    return promise; 
+                }
+            } // Close return 
+        }) //Close Factory
 
-});
+      .factory('Gramples', function($http, ApiEndpoint, gramplesSettings) {
+      // Might use a resource here that returns a JSON array
+          return {
+                bySubject: function(subjectID) {
+                   var promise = $http.get(ApiEndpoint.url + '/api/v1/getmygramplesbysubject/' + subjectID)
+                    .then(function(response){
+                            return response.data.original.data; 
+                    });  
+                    return promise; 
+                },
+                remove: function(grample) {
+                      gramples.splice(gramples.indexOf(grample), 1);
+                },
+                detail: function(grampleId) {
+                    for (var i = 0; i < gramples.length; i++) {
+                        if (gramples[i].id === parseInt(grampleID)) {
+                            return gramples[i];
+                        }
+                    }
+                    return null;
+                }, 
+                all: function(){
 
-
+                }
+            } // Close Return 
+      }) //Close factory
+     
+//A rudimentary calculation to display the appropriate rows
+function getLastpage(lastpage){
+    return (lastpage - 1) * (gramplesSettings.rowTake + 1);  
+}

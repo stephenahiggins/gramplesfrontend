@@ -11,6 +11,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   url: '/proxy/'
 })
 
+.constant('gramplesSettings', {
+  rowTake: 10, 
+})
+
 .run(function($ionicPlatform, $rootScope, $auth, $state) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -33,7 +37,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
               $rootScope.currentUser = null;
               $state.go('tab.home');
           });
-          }
+    }
   }); // End Ionic Ready 
 }) // End Run 
 
@@ -97,8 +101,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
               }, 
       views: {
         'tab-mygramples': {
-          templateUrl: 'templates/tab-mygramples.html',
-          controller: 'MyGramplesCtrl'
+          templateUrl: 'templates/tab-mygramples-subject.html',
+          controller: 'MySubjectsCrtl'
+        }
+      }
+    })
+
+    .state('tab.grample-by-subject', {
+      url: '/mygramples/subject/:subjectID',
+      views: {
+        'tab-mygramples': {
+          templateUrl: 'templates/grample-by-subject.html',
+          controller: 'MyGramplesBySubject'
         }
       }
     })

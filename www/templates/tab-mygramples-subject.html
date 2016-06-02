@@ -1,0 +1,10 @@
+<ion-view view-title="Select Subject">
+  <ion-content>
+    <ion-list>
+      <ion-item class="item item-icon-left item-icon-right" ng-repeat="subject in subjects" href="#/tab/mygramples/subject/{{subject.id}}">
+               <i class="icon {{subject.icon}}"></i> {{subject.name}}
+               <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

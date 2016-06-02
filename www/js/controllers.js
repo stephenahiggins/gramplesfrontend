@@ -5,11 +5,11 @@ angular.module('starter.controllers', [])
         $scope.loginError = false;
         $scope.loginErrorText;
         $scope.login = function() {
- 
-            var credentials = {
-                email: $scope.loginData.email,
-                password: $scope.loginData.password
-            }
+
+        var credentials = {
+            email: $scope.loginData.email,
+            password: $scope.loginData.password
+        }
           $auth.login(credentials)
                 .then(function(response) {
                     // Return an $http request for the authenticated user
@@ -53,17 +53,26 @@ angular.module('starter.controllers', [])
 
 .controller('HomeCtrl', function($scope) {})
 
-.controller('MyGramplesCtrl', function($scope, getGramples) {
-  var lastpage = 1; 
+.controller('MySubjectsCrtl', function($scope, Subjects) {
   $scope.$on("$ionicView.beforeEnter", function() { //Ensure the data is refreshed with every click of the tab. This is a workaround of the Ionic caching. 
       // Wait for the promise 
-      getGramples.all().then(function(promise){
-        $scope.gramples = promise.data; 
+      Subjects.getMine().then(function(promise){
+          $scope.subjects = promise;    
+          //$scope.maxGramples = promise.grample_count; 
       });
+      $scope.noMoreItemsAvailable = false;
   });
 
-  $scope.remove = function(getGramples) {
-      getGramples.remove(getGramples);
+})
+
+.controller('MyGramplesBySubject', function($scope, $stateParams, Gramples) {
+  var subjectID = $stateParams.subjectID;
+  Gramples.bySubject(subjectID).then(function(promise){
+    $scope.gramples = promise;   
+  });
+
+  $scope.remove = function(Gramples) {
+      Gramples.remove(Gramples);
   };
 })
 
@@ -71,7 +80,7 @@ angular.module('starter.controllers', [])
 
 .controller('FindGramplesCtrl', function($scope) {})
 
-.controller('MyGrampleDetailCtrl', function($scope, $stateParams, getGramples) {
+.controller('MyGrampleDetailCtrl', function($scope, $stateParams, Gramples) {
  // $scope.gramples = getGramples.get($stateParams.grampleId);
 })
 
