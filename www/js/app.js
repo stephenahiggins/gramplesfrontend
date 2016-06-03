@@ -101,28 +101,28 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
               }, 
       views: {
         'tab-mygramples': {
-          templateUrl: 'templates/tab-mygramples-subject.html',
+          templateUrl: 'templates/tab-mygramples-subjects.html',
           controller: 'MySubjectsCrtl'
         }
       }
     })
 
-    .state('tab.grample-by-subject', {
+    .state('tab.mygramples-by-subject', {
       url: '/mygramples/subject/:subjectID',
       views: {
         'tab-mygramples': {
-          templateUrl: 'templates/grample-by-subject.html',
+          templateUrl: 'templates/mygramples-by-subject.html',
           controller: 'MyGramplesBySubject'
         }
       }
     })
 
     .state('tab.grample-detail', {
-      url: '/mygramples/:grampleId',
+      url: '/grample/:grampleID',
       views: {
         'tab-mygramples': {
           templateUrl: 'templates/grample-detail.html',
-          controller: 'MyGrampleDetailCtrl'
+          controller: 'GrampleDetailCtrl'
         }
       }
     })
@@ -148,6 +148,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     })
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/home');
+$urlRouterProvider.otherwise('/tab/home');
 
 });

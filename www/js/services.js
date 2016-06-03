@@ -26,21 +26,20 @@ angular.module('starter.services', [])
                 bySubject: function(subjectID) {
                    var promise = $http.get(ApiEndpoint.url + '/api/v1/getmygramplesbysubject/' + subjectID)
                     .then(function(response){
-                            return response.data.original.data; 
+                            return response.data.original; 
                     });  
                     return promise; 
                 },
+                detail: function(grampleID) {
+                    var promise = $http.get(ApiEndpoint.url + '/api/v1/grample/' + grampleID)
+                     .then(function(response){
+                             return response.data.original; 
+                     });  
+                    return promise;
+                }, 
                 remove: function(grample) {
                       gramples.splice(gramples.indexOf(grample), 1);
                 },
-                detail: function(grampleId) {
-                    for (var i = 0; i < gramples.length; i++) {
-                        if (gramples[i].id === parseInt(grampleID)) {
-                            return gramples[i];
-                        }
-                    }
-                    return null;
-                }, 
                 all: function(){
 
                 }

@@ -1,15 +1,10 @@
-<!--
-  This template loads for the 'tab.friend-detail' state (app.js)
-  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
-  The FriendsCtrl pulls data from the Friends service (service.js)
-  The Friends service returns an array of friend data
--->
-<ion-view view-title="{{grample.name}}">
+
+<ion-view view-title="{{grample.data.grample_name}}">
   <ion-content class="padding">
-   <!-- <img ng-src="{{grample.face}}" style="width: 64px; height: 64px"> -->
-      <p>
-        {{Grample.description}}
-      </p> 
-    <h1>Hello, is it me you're looking for?</h1>
+        <img ng-src="{{grample.data.grample_image_url}}"> 
+        <p>Subject: {{grample.subject.name}}</p>
+        <p>{{grample.data.grample_description}}</p> 
+        <p>Grample by: <a href="mailto:{{grample.owner_info.email}}?subject=Your Grample" ng-if="typeof(grample.owner_info.email)!=='undefined'"> {{grample.owner_info.name}}</a></p>
+        <p ng-if="typeof(grample.owner_info.organisation.name)!=='undefined'">Organisation:  {{grample.owner_info.organisation.name}}</p>
   </ion-content>
 </ion-view>

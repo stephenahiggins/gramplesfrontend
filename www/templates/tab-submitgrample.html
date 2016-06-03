@@ -1,24 +1,40 @@
 <ion-view view-title="Submit Grample">
-  <ion-content class="padding">
+  <ion-content class="padding" ng-controller="SubmitGramplesCtrl">
     <h2>Submit a Grample</h2>
     <form name="grampleSubmit" ng-controller="formData">
+            <h4>What kind of Grample would you like to create?</h4>
              <div ng-controller="getImage">
 		            <button class="button button-positive button-full" ng-click="takePhoto()">Take Picture</button>
 		            <button class="button button-energized button-full" ng-click="getImageFromGalleryClick()">Upload an image</button>
+                <button class="button button-balanced button-full" ng-click="toggleTextBoxClick()">Submit Text</button>
 	             	<div class="center">
+                 <div ng-show="IsVisible">My DIV</div>
 	                <img id="uploadImage" ng-controller="imageInit" ng-src="{{imgURI}}"> 
-	              	</div>
+	              </div>
+
              </div>
            <div class="list">
                <label class="item item-input">
                    <span class="input-label">Name</span>
                    <input type="text" name="grampleName" ng-model="formData.grampleName">
                </label>
+                <div class="list">
+                   <label class="item item-input item-select">
+                       <div class="input-label">
+                           Subject
+                       </div>
+                       <select>
+                          <option ng-repeat="subject in subjects" selected>{{subject.name}}</option>
+                       </select>
+                   </label>
+               </div>
+
                <label class="item item-input">
                    <span class="input-label">Description</span>
                    <input type="text" name="grampleDescription" ng-model="formData.grampleDescription">
                </label> 
            </div>
+
            <div class="padding">
                <button type="button" class="button button-block button-positive" ng-click="formSubmit()">Submit</button>
            </div>

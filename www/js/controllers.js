@@ -58,17 +58,16 @@ angular.module('starter.controllers', [])
       // Wait for the promise 
       Subjects.getMine().then(function(promise){
           $scope.subjects = promise;    
-          //$scope.maxGramples = promise.grample_count; 
       });
-      $scope.noMoreItemsAvailable = false;
+      //$scope.noMoreItemsAvailable = false;
   });
-
 })
 
 .controller('MyGramplesBySubject', function($scope, $stateParams, Gramples) {
   var subjectID = $stateParams.subjectID;
   Gramples.bySubject(subjectID).then(function(promise){
-    $scope.gramples = promise;   
+    $scope.gramples = promise.data;   
+    $scope.subject = promise.subject; 
   });
 
   $scope.remove = function(Gramples) {
@@ -76,13 +75,21 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('SubmitGramplesCtrl', function($scope) {})
+.controller('GrampleDetailCtrl', function($scope, $stateParams, Gramples) {
+  var grampleID = $stateParams.grampleID;
+  Gramples.detail(grampleID).then(function(promise){
+    $scope.grample = promise;   
+  });
+})
+
+.controller('SubmitGramplesCtrl', function($scope, Subjects) {
+  Subjects.getAll().then(function(promise){
+      $scope.subjects = promise; 
+      $scope.selectedAtStart = 'pleaseSelect'; 
+  });
+})
 
 .controller('FindGramplesCtrl', function($scope) {})
-
-.controller('MyGrampleDetailCtrl', function($scope, $stateParams, Gramples) {
- // $scope.gramples = getGramples.get($stateParams.grampleId);
-})
 
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
@@ -104,6 +111,13 @@ angular.module('starter.controllers', [])
       console.log(formOutput.name); 
       console.log(formOutput.description); 
     }
+    // Show / Hide Grample Input Text Box 
+    $scope.IsVisible = false;
+    $scope.toggleTextBoxClick = function(){
+       $scope.IsVisible = $scope.IsVisible ? false : true;
+       console.log($scope.IsVisible); 
+    }
+    // End Show / Hide 
 }) 
 // End Form Data Controller
 

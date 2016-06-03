@@ -1,9 +1,10 @@
-<ion-view view-title="My Gramples">
+<ion-view view-title="My {{subject.name}}">
+
   <ion-content>
  <!--  <ion-infinite-scroll  ng-if="!noMoreItemsAvailable" on-infinite="loadMore(5)" distance="10%"></ion-infinite-scroll> -->
     <ion-list>
-      <ion-item class="item item-icon-left item-icon-right" href="#" ng-repeat="grample in gramples" ng-click="goToNextSlide()">
-               <img ng-src="{{grample.grample_thumbnail_url}}" height="20" width="20"> 
+      <ion-item class="item item-icon-left item-icon-right" ng-repeat="grample in gramples" href="#/tab/grample/{{grample.grample_id}}" >
+               <img ng-src="{{grample.grample_thumbnail_url}}"> 
                   {{grample.grample_name}}
                <i class="icon ion-chevron-right icon-accessory"></i>
              </ion-item>
