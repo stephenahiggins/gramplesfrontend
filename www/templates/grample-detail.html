@@ -1,9 +1,12 @@
 
 <ion-view view-title="{{grample.data.grample_name}}">
   <ion-content class="padding">
+  	<button class="button button-block button-positive" ng-show="flash == 'newgrample'">
+  	  Grample created!
+  	</button>
         <img ng-src="{{grample.data.grample_image_url}}"> 
-        <p>Subject: {{grample.subject.name}}</p>
-        <p>{{grample.data.grample_description}}</p> 
+        <p>Subject: {{grample.subject_name}}</p>
+        <p>{{grample.data.grample_keywords}}</p> 
         <p>Grample by: <a href="mailto:{{grample.owner_info.email}}?subject=Your Grample" ng-if="typeof(grample.owner_info.email)!=='undefined'"> {{grample.owner_info.name}}</a></p>
         <p ng-if="typeof(grample.owner_info.organisation.name)!=='undefined'">Organisation:  {{grample.owner_info.organisation.name}}</p>
   </ion-content>

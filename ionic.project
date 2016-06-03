@@ -4,5 +4,11 @@
   "proxies": [{
      "path": "/proxy/",
      "proxyUrl": "http://gramples.app/"
-   }]
+   }, 
+   {
+    "path": "/uploads/",
+    "proxyUrl": "http://gramples.app/uploads"
+  	} 
+
+   ]
 }

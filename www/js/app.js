@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova', 'satellizer'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova', 'satellizer',  'monospaced.elastic'])
 
 .constant('ApiEndpoint', {
   url: '/proxy/'
@@ -118,7 +118,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     })
 
     .state('tab.grample-detail', {
-      url: '/grample/:grampleID',
+      url: '/grample/:grampleID/:flash',
       views: {
         'tab-mygramples': {
           templateUrl: 'templates/grample-detail.html',

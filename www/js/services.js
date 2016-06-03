@@ -33,15 +33,23 @@ angular.module('starter.services', [])
                 detail: function(grampleID) {
                     var promise = $http.get(ApiEndpoint.url + '/api/v1/grample/' + grampleID)
                      .then(function(response){
+                            return response.data.original; 
+                     });  
+                    return promise;
+                }, 
+                submit: function(formData){
+                  console.log(formData); 
+                    var promise = $http.post(ApiEndpoint.url + '/api/v1/grample',
+                    {
+                      data: formData, 
+                    })
+                     .then(function(response){
                              return response.data.original; 
                      });  
                     return promise;
                 }, 
                 remove: function(grample) {
                       gramples.splice(gramples.indexOf(grample), 1);
-                },
-                all: function(){
-
                 }
             } // Close Return 
       }) //Close factory
